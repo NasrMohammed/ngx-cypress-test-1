@@ -15,25 +15,67 @@ describe('Our test suite', () => {
         // by attribute name
         cy.get('[placeholder]')
         // by attribute name and value 
-        cy.get('[placeholder="email"]')
+        cy.get('[placeholder="Email"]')
         // by class value 
         cy.get('[class="input-full-width size-medium shape-rectangle"]')
         // by tag name and attribute value 
-        cy.get('input[placeholder="email"]')
+        cy.get('input[placeholder="Email"]')
         // by two different attributes
-        cy.get('[placeholder="email"][type="email"]')
+        cy.get('[placeholder="Email"][type="email"]')
         // by tag name, attribute with value, class name
-        cy.get('input[placeholder="email"]#inputEmail.input-full-width')
+        cy.get('input[placeholder="Email"]#inputEmail.input-full-width')
         // the most recommended way by cypress
-        cy.get('[data-cy="inputEmail"]')
+       // cy.get('[data-cy="inputEmail"]')
     })
   
 })
 
+describe('Our test suite', () => {
 
-/*
-type of locaters:
-cypress uses jquery selector engine 
+    it('second test', () => {
+        cy.visit("/")
+        cy.contains('Form').click()
+        cy.contains('Form Layouts').click()
 
+        cy.get('[data-cy="signinButton"]')
+        cy.contains('Sign in')
 
-*/`
+        cy.contains('[status="warning"]','Sign in')
+
+        cy.get('#inputEmail3')
+        .parents('form')
+        .find('button')
+        .should('contain', 'Sign in')
+        .parents('form')
+        .find('nb-checkbox')
+        .click()
+
+        cy.contains('nb-card', 'Horizontal form').find('[type="email"]')
+    })
+
+    it('then and wrap methods', () => {
+        cy.visit("/")
+        cy.contains('Form').click()
+        cy.contains('Form Layouts').click()
+
+        // cy.contains('nb-card', 'Using the Grid').find('[for="inputEmail1"]').should('contain', "Email")
+        // cy.contains('nb-card', 'Using the Grid').find('[for="inputPassword2"]').should('contain', "Password")
+
+        // cy.contains('nb-card', 'Basic form').find('[for="exampleInputEmail1"]').should('contain', "Email address")
+        // cy.contains('nb-card', 'Basic form').find('[for="exampleInputPassword1"]').should('contain', "Password")
+        cy.contains('nb-card', 'Using the Grid').then(firstForm => {
+            const emailLabelFirst = firstForm.find('[for="inputEmail1"]').text()
+            const passwordLabelFirst = firstForm.find('[for="inputPassword2"]').text()
+            expect(emailLabelFirst).to.be.equal('Email')
+            expect(passwordLabelFirst).to.be.equal('Password')
+
+            cy.contains('nb-card', 'Basic form').then(secondForm => {
+                const emailLabelSecond = secondForm.find('[for="exampleInputEmail1"]').text()
+                expect(emailLabelSecond).to.be.equal('Email address')
+
+                cy.wrap(secondForm).find('[for="exampleInputPassword1"]').should('contain', 'Password')
+            })
+        }) 
+    })
+})
+
