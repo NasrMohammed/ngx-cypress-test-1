@@ -261,7 +261,7 @@ describe('Our test suite', () => {
         cy.get('nb-tooltip').should('contain', 'This is a tooltip')
     })
 
-    it.only('dialog box', () => {
+    it('dialog box', () => {
         cy.visit("/")
         cy.contains('Tables & Data').click()
         cy.contains('Smart Table').click()
@@ -281,13 +281,6 @@ describe('Our test suite', () => {
         // 3
         cy.get('tbody tr').first().find('.nb-trash').click()
         cy.on('window:confirm', () => false) 
-
-    })
-    it("Test CAT", () => {
-        cy.setCookie('wizauth', 'cladmin-nmohammed/asM4rcpUxptqrMY8tnvLTw==')
-        cy.visit("https://msstate-nmohammed-qa.dev7.leepfrog.com/courseleaf")
-        cy.contains('Course Import').click()
-       // cy.get('.print').contains('Print Options').click()
 
     })
    
